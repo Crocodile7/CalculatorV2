@@ -15,7 +15,7 @@ b = float(input("Введите второе число:"))
 
 if what == "+":
     c = a+b
-    print("Результат!"+str(c))
+    print("Результат!" + str(c))
 elif what == "-":
     c = a-b
     print("Результат" + str(c))
