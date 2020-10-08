@@ -6,8 +6,8 @@ namespace DriverSample
     {
         private static readonly byte FIRST_ASCII = 32;
         private static readonly byte LAST_ASCII = 127;
-        public static readonly char PACKET_START = 'P';
-        public static readonly char PACKET_END = 'E';
+        private static readonly char PACKET_START = 'P';
+        private static readonly char PACKET_END = 'E';
         private List<char> fStream;
 
         private bool Validate(char key)
@@ -31,7 +31,6 @@ namespace DriverSample
                 {
                     fStream.Clear();
                     var driverCommand = new DriverCommand(command);
-                    //Console.WriteLine($">>>{command}");
                 }
             }
         }
@@ -43,6 +42,8 @@ namespace DriverSample
             {
                 int startIndex = 0;
                 int endIndex = 0;
+
+                //TODO: think about the packet validation, i.e. what will happen if we have multiple packet start or packet end markers?
 
                 for(int i=0;i<fStream.Count;i++)
                 {
@@ -62,7 +63,6 @@ namespace DriverSample
                     result += fStream[i];
                 }
             }
-
             return result;
         }
 

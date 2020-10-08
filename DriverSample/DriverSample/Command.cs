@@ -5,7 +5,9 @@ namespace DriverSample
     class DriverCommand
     {
         private static readonly char PACKET_SEP = ':';
-        private readonly char PARAMS_SEP = ',';
+        private static readonly char PARAMS_SEP = ',';
+        private static readonly string ACK = "ACK";
+        private static readonly string NACK = "NACK";
         private string fCommand;
         private string[] fParams;
 
@@ -27,13 +29,13 @@ namespace DriverSample
             {
                 case "T":
                 {
-                    Console.WriteLine($"ACK {fCommand}:{fParams[0]} --> writing '{fParams[0]}'");
+                    Console.WriteLine($"{ACK} {fCommand}:{fParams[0]} --> writing '{fParams[0]}'");
                     break;
                 }
 
                 case "S":
                 {
-                    Console.WriteLine($"ACK {fCommand}:{fParams[0]},{fParams[1]} --> playing sound ");
+                    Console.WriteLine($"{ACK} {fCommand}:{fParams[0]},{fParams[1]} --> playing sound ");
                     int freq;
                     int duration;
                     if (!Int32.TryParse(fParams[0], out freq))
@@ -54,17 +56,11 @@ namespace DriverSample
 
                 default:
                 {
-                    Console.WriteLine($"NACK {fCommand}:");
+                    Console.WriteLine($"{NACK} {fCommand}:");
                     for (int i = 0; i < fParams.Length; i++)
                     {
-                        if (i == 0)
-                        {
-                            Console.Write($"{fParams[i]}");
-                        }
-                        else
-                        {
-                            Console.Write($",{fParams[i]}");
-                        }
+                        var displaySep = (i == 0) ? string.Empty : ",";
+                        Console.Write($"{displaySep}{fParams[i]}");
                     }
                     break;
                 }
